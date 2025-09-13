@@ -11,7 +11,7 @@ export default function Home() {
         {/* Hero Section */}
         <div className='flex flex-col lg:flex-row items-center gap-8 mb-12'>
           {/* Left Side - Content */}
-          <div className='w-full lg:w-1/2 text-center lg:text-left'>
+          <div className='w-full lg:w-1/2 lg:justify-center text-center lg:text-left'>
             <h1 className='text-4xl md:text-5xl font-bold mb-4 text-black dark:text-white'>
               Welcome to <span className='text-gray-600 dark:text-light-gray'>SkillNotes</span>
             </h1>
@@ -47,7 +47,7 @@ export default function Home() {
             </div>
 
             {/* Call to Action Buttons */}
-            <div className='flex gap-3 justify-center lg:justify-start flex-wrap mb-6'>
+            <div className='flex gap-6  flex-wrap mb-6 items-center'>
               <button 
                 onClick={() => navigate('/store')}
                 className='bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors duration-200 flex items-center gap-2'
