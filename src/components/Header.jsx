@@ -50,7 +50,7 @@ export default function Header() {
     };
 
     return (
-        <header className='bg-white dark:bg-black text-black dark:text-white sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800'>
+        <header className='bg-white/80 dark:bg-black/80 backdrop-blur-md text-black dark:text-white sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-800/50'>
             <div className='max-w-7xl mx-auto px-4 py-4'>
                 <div className='flex items-center justify-between'>
                     {/* Logo */}
