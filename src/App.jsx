@@ -1,5 +1,6 @@
 import RoutingMap from "./RoutingMap";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import "./styles/toggle.css";
 
 export default function App() {
   return (
