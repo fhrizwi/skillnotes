@@ -3,12 +3,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Home, Phone, Info, LogIn, Menu, X, ShoppingCart, User, LogOut, BookOpen, ArrowRight } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
 import { authService } from '../services/authService'
+import { useCart } from '../contexts/CartContext'
 
 export default function Header() {
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { getTotalItems } = useCart();
     const underlineHover = 'hover:text-light-gray transition-colors duration-200';
 
     useEffect(() => {
@@ -93,9 +95,14 @@ export default function Header() {
                     {/* Desktop Login */}
                     <div className='hidden md:flex items-center gap-3'>
                         <ThemeToggle />
-                        <button className='relative p-2 text-black dark:text-white hover:text-gray-600 dark:hover:text-light-gray transition-colors duration-200'>
+                        <button 
+                            onClick={() => navigate('/cart')}
+                            className='relative p-2 text-black dark:text-white hover:text-gray-600 dark:hover:text-light-gray transition-colors duration-200'
+                        >
                             <ShoppingCart className='w-6 h-6' />
-                            <span className='absolute -top-1 -right-1 bg-black dark:bg-white text-white dark:text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold'>0</span>
+                            <span className='absolute -top-1 -right-1 bg-black dark:bg-white text-white dark:text-black text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold'>
+                                {getTotalItems()}
+                            </span>
                         </button>
                         {isAuthenticated ? (
                             <div className='flex items-center gap-3'>
@@ -117,9 +124,17 @@ export default function Header() {
                     <div className='md:hidden flex items-center gap-1 sm:gap-2'>
 
                         {/* Mobile Cart */}
-                        <button className='relative p-2 text-black dark:text-white hover:text-gray-600 dark:hover:text-light-gray transition-colors duration-200'>
+                        <button 
+                            onClick={() => {
+                                navigate('/cart');
+                                setIsMenuOpen(false);
+                            }}
+                            className='relative p-2 text-black dark:text-white hover:text-gray-600 dark:hover:text-light-gray transition-colors duration-200'
+                        >
                             <ShoppingCart className='w-5 h-5 sm:w-6 sm:h-6' />
-                            <span className='absolute -top-1 -right-1 bg-black dark:bg-white text-white dark:text-black text-xs rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center font-bold'>0</span>
+                            <span className='absolute -top-1 -right-1 bg-black dark:bg-white text-white dark:text-black text-xs rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center font-bold'>
+                                {getTotalItems()}
+                            </span>
                         </button>
 
                         {/* Mobile Menu Button */}

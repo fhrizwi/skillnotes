@@ -1,15 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProductCard from '../components/ProductCard'
 import { Search } from 'lucide-react'
+import { productService } from '../services/productService'
 
 export default function Store() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [showLeftFade, setShowLeftFade] = useState(false)
   const [showRightFade, setShowRightFade] = useState(true)
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  // Sample product data
-  const products = [
+  // Load products from service
+  useEffect(() => {
+    loadProducts()
+  }, [])
+
+  const loadProducts = async () => {
+    try {
+      setLoading(true)
+      const response = await productService.getProducts()
+      if (response.success) {
+        setProducts(response.data)
+      }
+    } catch (error) {
+      console.error('Error loading products:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Sample product data (fallback)
+  const fallbackProducts = [
     {
       id: 1,
       title: "Complete React.js Mastery Guide",
@@ -103,6 +125,17 @@ export default function Store() {
 
     return matchesSearch && matchesCategory
   })
+
+  if (loading) {
+    return (
+      <div className='min-h-screen bg-white dark:bg-black flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-black dark:border-white mx-auto'></div>
+          <p className='mt-4 text-gray-600 dark:text-gray-300'>Loading products...</p>
+        </div>
+      </div>
+    )
+  }
 
   // Handle scroll to show/hide fade effects
   const handleScroll = (e) => {

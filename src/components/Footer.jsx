@@ -7,7 +7,7 @@ export default function Footer() {
         <footer className='bg-gray-100 dark:bg-black text-black dark:text-white border-t border-gray-200 dark:border-gray-800'>
             <div className='max-w-7xl mx-auto px-4 py-12'>
                 {/* Main Footer Content */}
-                <div className='grid md:grid-cols-3 gap-8 mb-8'>
+                <div className='grid md:grid-cols-4 gap-8 mb-8'>
                     {/* Quick Links */}
                     <div>
                         <h3 className='text-xl font-bold text-black dark:text-white mb-4'>Quick Links</h3>
@@ -73,6 +73,27 @@ export default function Footer() {
                             </div>
                         </div>
                     </div>
+
+                    {/* Logo and Taglines */}
+                    <div className='flex flex-col items-center md:items-start'>
+                        <div className='mb-4'>
+                            <div className='text-3xl font-bold text-black dark:text-white mb-2'>
+                                SkillNotes
+                            </div>
+                            <div className='w-16 h-1 bg-gray-400 dark:bg-gray-600 rounded-full'></div>
+                        </div>
+                        <div className='text-center md:text-left space-y-2'>
+                            <p className='text-gray-600 dark:text-light-gray text-sm font-medium'>
+                                "Master Your Skills"
+                            </p>
+                            <p className='text-gray-600 dark:text-light-gray text-xs'>
+                                Quality study materials for every student
+                            </p>
+                            <p className='text-gray-600 dark:text-light-gray text-xs'>
+                                Learn • Practice • Excel
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Bottom Section - Social Links and Copyright */}
@@ -82,24 +103,26 @@ export default function Footer() {
                         <div className='flex items-center gap-4'>
                             <span className='text-gray-600 dark:text-light-gray'>Follow us:</span>
                             <div className='flex items-center gap-3'>
-                                <a href="#" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200'>
-                                    <Facebook className='w-5 h-5' />
-                                </a>
-                                <a href="#" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200'>
-                                    <Instagram className='w-5 h-5' />
-                                </a>
-                                <a href="#" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200'>
-                                    <Twitter className='w-5 h-5' />
-                                </a>
-                                <a href="#" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200'>
-                                    <Linkedin className='w-5 h-5' />
-                                </a>
-                                <a href="#" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200'>
-                                    <Github className='w-5 h-5' />
-                                </a>
-                                <a href="#" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200'>
+
+                                <a href="https://youtube.com/@skillnotes" target="_blank" rel="noopener noreferrer" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200' title="YouTube">
                                     <Youtube className='w-5 h-5' />
                                 </a>
+                                <a href="https://instagram.com/skillnotes" target="_blank" rel="noopener noreferrer" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200' title="Instagram">
+                                    <Instagram className='w-5 h-5' />
+                                </a>
+                                <a href="https://facebook.com/skillnotes" target="_blank" rel="noopener noreferrer" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200' title="Facebook">
+                                    <Facebook className='w-5 h-5' />
+                                </a>
+                                <a href="https://twitter.com/skillnotes" target="_blank" rel="noopener noreferrer" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200' title="Twitter">
+                                    <Twitter className='w-5 h-5' />
+                                </a>
+                                <a href="https://linkedin.com/company/skillnotes" target="_blank" rel="noopener noreferrer" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200' title="LinkedIn">
+                                    <Linkedin className='w-5 h-5' />
+                                </a>
+                                <a href="https://github.com/skillnotes" target="_blank" rel="noopener noreferrer" className='text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200' title="GitHub">
+                                    <Github className='w-5 h-5' />
+                                </a>
+
                             </div>
                         </div>
 

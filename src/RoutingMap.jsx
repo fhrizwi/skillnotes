@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -14,11 +14,17 @@ import Terms from './pages/Terms'
 import Refund from './pages/Refund'
 import Store from './pages/Store'
 import MyPurchases from './pages/MyPurchases'
-import ProductDetail from './pages/ProductDetail'
+import ProductPreview from './pages/ProductPreview'
+import Cart from './pages/Cart'
 
 function Layout() {
   const location = useLocation();
   const hideHeaderFooter = ['/login', '/signup'].includes(location.pathname);
+
+  // Scroll to top when route changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <>
@@ -27,7 +33,8 @@ function Layout() {
         <Route path="/" element={<Home />} />
         <Route path="/notes" element={<Notes />} />
         <Route path="/store" element={<Store />} />
-        <Route path="/store/product/:id" element={<ProductDetail />} />
+        <Route path="/store/preview/:id" element={<ProductPreview />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/my-purchases" element={<MyPurchases />} />
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/about" element={<About />} />

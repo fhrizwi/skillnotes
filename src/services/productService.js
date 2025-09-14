@@ -1,76 +1,11 @@
 // Product management service for digital marketplace
-const API_BASE_URL = 'https://jsonplaceholder.typicode.com'; // Mock API
+import productsData from '../data/products.json';
 
 // Simulate network delay
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Mock products data
-const MOCK_PRODUCTS = [
-  {
-    id: 1,
-    title: "Complete React Development Guide",
-    description: "A comprehensive PDF guide covering React fundamentals, hooks, state management, and advanced concepts.",
-    price: 299,
-    currency: "INR",
-    category: "PDF",
-    fileType: "pdf",
-    fileSize: "2.5 MB",
-    downloadCount: 150,
-    rating: 4.8,
-    image: "https://via.placeholder.com/300x200/4F46E5/FFFFFF?text=React+Guide",
-    tags: ["React", "JavaScript", "Frontend", "Tutorial"],
-    createdAt: "2024-01-15",
-    isActive: true
-  },
-  {
-    id: 2,
-    title: "Modern UI Design System - PSD Files",
-    description: "Complete PSD design system with components, icons, and templates for modern web applications.",
-    price: 499,
-    currency: "INR",
-    category: "PSD",
-    fileType: "psd",
-    fileSize: "15.2 MB",
-    downloadCount: 89,
-    rating: 4.9,
-    image: "https://via.placeholder.com/300x200/10B981/FFFFFF?text=UI+Design+System",
-    tags: ["Design", "UI/UX", "PSD", "Templates"],
-    createdAt: "2024-01-20",
-    isActive: true
-  },
-  {
-    id: 3,
-    title: "Complete Web Development Bundle",
-    description: "ZIP file containing HTML, CSS, JavaScript templates, and documentation for web development projects.",
-    price: 799,
-    currency: "INR",
-    category: "ZIP",
-    fileType: "zip",
-    fileSize: "45.8 MB",
-    downloadCount: 234,
-    rating: 4.7,
-    image: "https://via.placeholder.com/300x200/F59E0B/FFFFFF?text=Web+Dev+Bundle",
-    tags: ["Web Development", "Templates", "HTML", "CSS", "JavaScript"],
-    createdAt: "2024-01-25",
-    isActive: true
-  },
-  {
-    id: 4,
-    title: "Node.js Backend Architecture Guide",
-    description: "Detailed PDF guide on building scalable Node.js applications with best practices and patterns.",
-    price: 399,
-    currency: "INR",
-    category: "PDF",
-    fileType: "pdf",
-    fileSize: "3.2 MB",
-    downloadCount: 67,
-    rating: 4.6,
-    image: "https://via.placeholder.com/300x200/EF4444/FFFFFF?text=Node.js+Guide",
-    tags: ["Node.js", "Backend", "Architecture", "JavaScript"],
-    createdAt: "2024-02-01",
-    isActive: true
-  }
-];
+// Use products from JSON file
+const MOCK_PRODUCTS = productsData;
 
 // Mock purchased products (user's purchase history)
 const MOCK_PURCHASES = [];

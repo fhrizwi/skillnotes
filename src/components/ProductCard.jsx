@@ -1,7 +1,15 @@
-import React from 'react'
-import { ShoppingCart, Download, Star } from 'lucide-react'
+import React, { useState } from 'react'
+import { ShoppingCart, Download, Star, Check, Trash2 } from 'lucide-react'
+import { useCart } from '../contexts/CartContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function ProductCard({ product }) {
+  const { addToCart, removeFromCart, cartItems } = useCart()
+  const [addedToCart, setAddedToCart] = useState(false)
+  const navigate = useNavigate()
+  
+  // Check if product is already in cart
+  const isInCart = cartItems.some(item => item.id === product.id)
   const {
     id,
     title,
@@ -17,10 +25,38 @@ export default function ProductCard({ product }) {
     rank
   } = product
 
+  const handleAddToCart = (e) => {
+    e.stopPropagation()
+    addToCart(product)
+    setAddedToCart(true)
+    setTimeout(() => setAddedToCart(false), 2000)
+  }
+
+  const handleRemoveFromCart = (e) => {
+    e.stopPropagation()
+    removeFromCart(product.id)
+    setAddedToCart(false)
+  }
+
+  const handleBuyNow = (e) => {
+    e.stopPropagation()
+    navigate(`/store/preview/${id}`)
+  }
+
+  const handleCardClick = () => {
+    navigate(`/store/preview/${id}`)
+  }
+
   return (
-    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden transition-all duration-300 group">
+    <div 
+      className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden transition-all duration-300 group cursor-pointer"
+      onClick={handleCardClick}
+    >
       {/* Banner Image */}
-      <div className="relative h-32 bg-gray-100 dark:bg-gray-800 overflow-hidden">
+      <div 
+        className="relative aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden cursor-pointer"
+        onClick={handleCardClick}
+      >
         <img 
           src={banner} 
           alt={title}
@@ -86,12 +122,43 @@ export default function ProductCard({ product }) {
 
          {/* Action Buttons */}
          <div className="flex gap-1">
-           <button className="flex-1 bg-black dark:bg-white text-white dark:text-black px-2 py-1.5 rounded text-xs font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors duration-200 flex items-center justify-center gap-1">
-             <ShoppingCart className="w-3 h-3" />
-             Add to Cart
-           </button>
-           <button className="flex-1 bg-gray-100 dark:bg-gray-800 text-black dark:text-white px-2 py-1.5 rounded text-xs font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
-             Preview
+           {isInCart ? (
+             <button 
+               onClick={handleRemoveFromCart}
+               className="flex-1 px-2 py-1.5 rounded text-xs font-medium transition-colors duration-200 flex items-center justify-center gap-1 bg-gray-100 dark:bg-gray-800 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+             >
+               <Trash2 className="w-3 h-3" />
+               Remove
+             </button>
+           ) : (
+             <button 
+               onClick={handleAddToCart}
+               className={`flex-1 px-2 py-1.5 rounded text-xs font-medium transition-colors duration-200 flex items-center justify-center gap-1 ${
+                 addedToCart 
+                   ? 'bg-green-600 text-white' 
+                   : 'bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200'
+               }`}
+             >
+               {addedToCart ? (
+                 <>
+                   <Check className="w-3 h-3" />
+                   <span className="hidden sm:inline">Added!</span>
+                   <span className="sm:hidden">Added!</span>
+                 </>
+               ) : (
+                 <>
+                   <ShoppingCart className="w-3 h-3" />
+                   <span className="hidden sm:inline">Add to Cart</span>
+                   <span className="sm:hidden">Add</span>
+                 </>
+               )}
+             </button>
+           )}
+           <button 
+             onClick={handleBuyNow}
+             className="flex-1 bg-gray-100 dark:bg-gray-800 text-black dark:text-white px-2 py-1.5 rounded text-xs font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+           >
+             Buy Now
            </button>
          </div>
       </div>
