@@ -4,7 +4,6 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Notes from './pages/Notes'
 import ContactUs from './pages/ContactUs'
 import Login from './components/ui/Login'
 import SignUp from './components/ui/SignUp'
@@ -16,6 +15,8 @@ import Store from './pages/Store'
 import MyPurchases from './pages/MyPurchases'
 import ProductPreview from './pages/ProductPreview'
 import Cart from './pages/Cart'
+import Profile from './pages/Profile'
+import Help from './pages/Help'
 
 function Layout() {
   const location = useLocation();
@@ -31,7 +32,6 @@ function Layout() {
       {!hideHeaderFooter && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/notes" element={<Notes />} />
         <Route path="/store" element={<Store />} />
         <Route path="/store/preview/:id" element={<ProductPreview />} />
         <Route path="/cart" element={<Cart />} />
@@ -44,6 +44,8 @@ function Layout() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/refund" element={<Refund />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/help" element={<Help />} />
       </Routes>
       {!hideHeaderFooter && <Footer />}
     </>

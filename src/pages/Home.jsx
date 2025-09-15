@@ -298,7 +298,7 @@ export default function Home() {
                     Faizul Haque
                   </h3>
                   <p className='text-sm text-gray-600 dark:text-gray-300 mb-2'>
-                    Content Creator
+                    Frontend Developer
                   </p>
                   <p className='text-xs text-gray-500 dark:text-gray-400'>
                     Creates all the notes and study materials for students.

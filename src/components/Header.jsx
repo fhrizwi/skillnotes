@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Home, Phone, Info, LogIn, Menu, X, ShoppingCart, User, LogOut, BookOpen, ArrowRight } from 'lucide-react'
+import { Home, Phone, Info, LogIn, Menu, X, ShoppingCart, User, LogOut, BookOpen, ArrowRight, Settings, ShoppingBag } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
+import ProfileDropdown from './ProfileDropdown'
 import { authService } from '../services/authService'
 import { useCart } from '../contexts/CartContext'
 
@@ -74,7 +75,7 @@ export default function Header() {
                         </Link>
                         {isAuthenticated && (
                             <Link to="/my-purchases" className={`flex items-center gap-2 ${underlineHover}`}>
-                                <User className='w-4 h-4' />
+                                <ShoppingBag className='w-4 h-4' />
                                 My Purchases
                             </Link>
                         )}
@@ -105,13 +106,7 @@ export default function Header() {
                             </span>
                         </button>
                         {isAuthenticated ? (
-                            <div className='flex items-center gap-3'>
-                                <div className='w-8 h-8 bg-black dark:bg-white rounded-full flex items-center justify-center'>
-                                    <span className='text-sm text-white dark:text-black'>
-                                        {user?.name?.charAt(0)?.toUpperCase() || 'U'}
-                                    </span>
-                                </div>
-                            </div>
+                            <ProfileDropdown user={user} onLogout={handleLogout} />
                         ) : (
                             <Link to="/login" className='bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-light-gray transition-colors duration-200 flex items-center gap-2'>
                                 <ArrowRight className='w-4 h-4' />
@@ -164,7 +159,7 @@ export default function Header() {
                                 </Link>
                                 {isAuthenticated && (
                                     <Link to="/my-purchases" className={`flex items-center gap-2 py-2 ${underlineHover}`} onClick={() => setIsMenuOpen(false)}>
-                                        <User className='w-4 h-4' />
+                                        <ShoppingBag className='w-4 h-4' />
                                         My Purchases
                                     </Link>
                                 )}
@@ -217,6 +212,26 @@ export default function Header() {
                                             >
                                                 <LogOut className='w-5 h-5' />
                                             </button>
+                                        </div>
+                                        
+                                        {/* Mobile Profile Options */}
+                                        <div className='mt-3 space-y-2'>
+                                            <Link
+                                                to="/profile"
+                                                onClick={() => setIsMenuOpen(false)}
+                                                className='flex items-center gap-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg px-2 transition-colors duration-200'
+                                            >
+                                                <User className='w-4 h-4' />
+                                                <span>Profile</span>
+                                            </Link>
+                                            <Link
+                                                to="/settings"
+                                                onClick={() => setIsMenuOpen(false)}
+                                                className='flex items-center gap-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg px-2 transition-colors duration-200'
+                                            >
+                                                <Settings className='w-4 h-4' />
+                                                <span>Settings</span>
+                                            </Link>
                                         </div>
                                     </div>
                                 )}

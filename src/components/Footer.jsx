@@ -15,9 +15,6 @@ export default function Footer() {
                             <Link to="/" className='block text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200'>
                                 Home
                             </Link>
-                            <Link to="/notes" className='block text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200'>
-                                Notes
-                            </Link>
                             <Link to="/contactus" className='block text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200'>
                                 Contact Us
                             </Link>

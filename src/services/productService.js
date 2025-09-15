@@ -26,8 +26,7 @@ export const productService = {
       const searchTerm = filters.search.toLowerCase();
       filteredProducts = filteredProducts.filter(p => 
         p.title.toLowerCase().includes(searchTerm) ||
-        p.description.toLowerCase().includes(searchTerm) ||
-        p.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+        p.description.toLowerCase().includes(searchTerm)
       );
     }
     
@@ -143,8 +142,7 @@ export const productService = {
     const searchTerm = query.toLowerCase();
     const results = MOCK_PRODUCTS.filter(p => 
       p.title.toLowerCase().includes(searchTerm) ||
-      p.description.toLowerCase().includes(searchTerm) ||
-      p.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+      p.description.toLowerCase().includes(searchTerm)
     );
     
     return {

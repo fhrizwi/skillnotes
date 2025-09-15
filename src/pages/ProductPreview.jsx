@@ -249,68 +249,25 @@ export default function ProductPreview() {
                  direction="vertical"
                  loop={true}
                >
-                <SwiperSlide>
-                  <div className='w-full h-full flex items-center justify-center relative'>
-                    {/* Blurred Background */}
-                    <div 
-                      className='absolute inset-0 bg-cover bg-center filter blur-lg scale-110 opacity-30'
-                      style={{
-                        backgroundImage: `url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/4e1a69125317397.61166c904e83f.jpg")`
-                      }}
-                    ></div>
-                    {/* Main Image */}
-                    <img 
-                      src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/4e1a69125317397.61166c904e83f.jpg" 
-                      alt={product.title}
-                      className='max-w-full max-h-full object-contain relative z-10'
-                    />
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className='w-full h-full flex items-center justify-center relative'>
-                    <div 
-                      className='absolute inset-0 bg-cover bg-center filter blur-lg scale-110 opacity-30'
-                      style={{
-                        backgroundImage: `url("https://img.pikbest.com/origin/05/97/51/26HpIkbEsTMSV.jpg!w700wp")`
-                      }}
-                    ></div>
-                    <img 
-                      src="https://img.pikbest.com/origin/05/97/51/26HpIkbEsTMSV.jpg!w700wp" 
-                      alt={`${product.title} - Preview 2`}
-                      className='max-w-full max-h-full object-contain relative z-10'
-                    />
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className='w-full h-full flex items-center justify-center relative'>
-                    <div 
-                      className='absolute inset-0 bg-cover bg-center filter blur-lg scale-110 opacity-30'
-                      style={{
-                        backgroundImage: `url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=800&fit=crop")`
-                      }}
-                    ></div>
-                    <img 
-                      src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=800&fit=crop" 
-                      alt={`${product.title} - Preview 3`}
-                      className='max-w-full max-h-full object-contain relative z-10'
-                    />
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className='w-full h-full flex items-center justify-center relative'>
-                    <div 
-                      className='absolute inset-0 bg-cover bg-center filter blur-lg scale-110 opacity-30'
-                      style={{
-                        backgroundImage: `url("https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=800&fit=crop")`
-                      }}
-                    ></div>
-                    <img 
-                      src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=800&fit=crop" 
-                      alt={`${product.title} - Preview 4`}
-                      className='max-w-full max-h-full object-contain relative z-10'
-                    />
-                  </div>
-                </SwiperSlide>
+                {product.images && product.images.map((image, index) => (
+                  <SwiperSlide key={index}>
+                    <div className='w-full h-full flex items-center justify-center relative'>
+                      {/* Blurred Background */}
+                      <div 
+                        className='absolute inset-0 bg-cover bg-center filter blur-lg scale-110 opacity-30'
+                        style={{
+                          backgroundImage: `url("${image}")`
+                        }}
+                      ></div>
+                      {/* Main Image */}
+                      <img 
+                        src={image} 
+                        alt={`${product.title} - Preview ${index + 1}`}
+                        className='max-w-full max-h-full object-contain relative z-10'
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
               </Swiper>
             </div>
           </div>
@@ -539,42 +496,17 @@ export default function ProductPreview() {
                direction="vertical"
                loop={false}
              >
-              <SwiperSlide>
-                <div className='w-full h-full flex items-center justify-center relative'>
-                  <img 
-                    src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/4e1a69125317397.61166c904e83f.jpg" 
-                    alt={product.title}
-                    className='max-w-full max-h-full object-contain'
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className='w-full h-full flex items-center justify-center relative'>
-                  <img 
-                    src="https://img.pikbest.com/origin/05/97/51/26HpIkbEsTMSV.jpg!w700wp" 
-                    alt={`${product.title} - Preview 2`}
-                    className='max-w-full max-h-full object-contain'
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className='w-full h-full flex items-center justify-center relative'>
-                  <img 
-                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=800&fit=crop" 
-                    alt={`${product.title} - Preview 3`}
-                    className='max-w-full max-h-full object-contain'
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className='w-full h-full flex items-center justify-center relative'>
-                  <img 
-                    src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=800&fit=crop" 
-                    alt={`${product.title} - Preview 4`}
-                    className='max-w-full max-h-full object-contain'
-                  />
-                </div>
-              </SwiperSlide>
+              {product.images && product.images.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <div className='w-full h-full flex items-center justify-center relative'>
+                    <img 
+                      src={image} 
+                      alt={`${product.title} - Preview ${index + 1}`}
+                      className='max-w-full max-h-full object-contain'
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
             </Swiper>
             
              {/* Custom Navigation Buttons */}
@@ -586,7 +518,7 @@ export default function ProductPreview() {
                  </button>
                )}
                {/* Down Button - Only show if not on last slide */}
-               {currentSlide < 3 && (
+               {currentSlide < (product.images ? product.images.length - 1 : 3) && (
                  <button className="swiper-button-next-custom bg-white/20 text-white p-3 rounded-full hover:bg-white/30 transition-all duration-200 backdrop-blur-sm">
                    <ChevronDown className="w-6 h-6" />
                  </button>
