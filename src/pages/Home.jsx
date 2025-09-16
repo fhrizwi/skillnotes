@@ -1,12 +1,41 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, Search, Star, ArrowRight, Download, Users, Crown, Shield, Code, Database, Globe, Smartphone, Brain, Trophy } from 'lucide-react'
 import StarRating from '../components/StarRating'
 import Avatar from '../components/Avatar'
 import ProductCard from '../components/ProductCard'
+import { productService } from '../services/productService'
 
 export default function Home() {
   const navigate = useNavigate()
+  const [topSoldProducts, setTopSoldProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadTopSoldProducts()
+  }, [])
+
+  const loadTopSoldProducts = async () => {
+    try {
+      setLoading(true)
+      const response = await productService.getProducts()
+      if (response.success) {
+        // Get top 4 products by downloads and add ranking
+        const topProducts = response.data
+          .sort((a, b) => b.downloads - a.downloads)
+          .slice(0, 4)
+          .map((product, index) => ({
+            ...product,
+            rank: index + 1
+          }))
+        setTopSoldProducts(topProducts)
+      }
+    } catch (error) {
+      console.error('Error loading top sold products:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className='min-h-screen bg-white dark:bg-black text-black dark:text-white'>
@@ -147,67 +176,20 @@ export default function Home() {
           </div>
 
           {/* Top Products Grid */}
-          <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-            <ProductCard product={{
-              id: 1,
-              title: "Complete React.js Mastery Guide",
-              banner: "/images/heroimage.png",
-              price: 299,
-              originalPrice: 599,
-              downloads: 15420,
-              rating: 4.8,
-              reviews: 324,
-              description: "Comprehensive guide covering React fundamentals, hooks, state management, and advanced patterns.",
-              category: "Web Development",
-              fileType: "PDF",
-              rank: 1
-            }} />
-            
-            <ProductCard product={{
-              id: 2,
-              title: "JavaScript ES6+ Complete Reference",
-              banner: "/images/heroimage.png",
-              price: 199,
-              originalPrice: 399,
-              downloads: 12850,
-              rating: 4.7,
-              reviews: 287,
-              description: "Master modern JavaScript with ES6+ features, async programming, and best practices.",
-              category: "Programming",
-              fileType: "ZIP",
-              rank: 2
-            }} />
-            
-            <ProductCard product={{
-              id: 3,
-              title: "DSA Complete Course",
-              banner: "/images/heroimage.png",
-              price: 399,
-              originalPrice: 799,
-              downloads: 9876,
-              rating: 4.9,
-              reviews: 156,
-              description: "Data Structures & Algorithms mastery with comprehensive examples and practice problems.",
-              category: "Programming",
-              fileType: "PDF",
-              rank: 3
-            }} />
-            
-            <ProductCard product={{
-              id: 4,
-              title: "Python for Beginners",
-              banner: "/images/heroimage.png",
-              price: 249,
-              originalPrice: 499,
-              downloads: 11234,
-              rating: 4.6,
-              reviews: 198,
-              description: "Learn Python programming from scratch with practical examples and projects.",
-              category: "Programming",
-              fileType: "ZIP",
-              rank: 4
-            }} />
-          </div>
+          {loading ? (
+            <div className='flex justify-center items-center py-12'>
+              <div className='text-center'>
+                <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-black dark:border-white mx-auto'></div>
+                <p className='mt-4 text-gray-600 dark:text-gray-300'>Loading top products...</p>
+              </div>
+            </div>
+          ) : (
+            <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+              {topSoldProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Team Section */}

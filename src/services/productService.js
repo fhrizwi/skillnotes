@@ -1,11 +1,11 @@
 // Product management service for digital marketplace
-import productsData from '../data/products.json';
+const API_BASE_URL = 'https://skillnotes.faizulhaque2002.workers.dev/api/skillnotes';
 
 // Simulate network delay
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Use products from JSON file
-const MOCK_PRODUCTS = productsData;
+// Cache for products
+let cachedProducts = null;
 
 // Mock purchased products (user's purchase history)
 const MOCK_PURCHASES = [];
@@ -13,81 +13,121 @@ const MOCK_PURCHASES = [];
 export const productService = {
   // Get all products
   async getProducts(filters = {}) {
-    await delay(1000);
-    
-    let filteredProducts = [...MOCK_PRODUCTS];
-    
-    // Apply filters
-    if (filters.category) {
-      filteredProducts = filteredProducts.filter(p => p.category.toLowerCase() === filters.category.toLowerCase());
+    try {
+      // Use cached products if available
+      if (!cachedProducts) {
+        const response = await fetch(API_BASE_URL);
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        cachedProducts = await response.json();
+      }
+      
+      let filteredProducts = [...cachedProducts];
+      
+      // Apply filters
+      if (filters.category) {
+        filteredProducts = filteredProducts.filter(p => p.category.toLowerCase() === filters.category.toLowerCase());
+      }
+      
+      if (filters.search) {
+        const searchTerm = filters.search.toLowerCase();
+        filteredProducts = filteredProducts.filter(p => 
+          p.title.toLowerCase().includes(searchTerm) ||
+          p.description.toLowerCase().includes(searchTerm)
+        );
+      }
+      
+      if (filters.minPrice) {
+        filteredProducts = filteredProducts.filter(p => p.price >= filters.minPrice);
+      }
+      
+      if (filters.maxPrice) {
+        filteredProducts = filteredProducts.filter(p => p.price <= filters.maxPrice);
+      }
+      
+      return {
+        success: true,
+        data: filteredProducts
+      };
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      return {
+        success: false,
+        error: error.message,
+        data: []
+      };
     }
-    
-    if (filters.search) {
-      const searchTerm = filters.search.toLowerCase();
-      filteredProducts = filteredProducts.filter(p => 
-        p.title.toLowerCase().includes(searchTerm) ||
-        p.description.toLowerCase().includes(searchTerm)
-      );
-    }
-    
-    if (filters.minPrice) {
-      filteredProducts = filteredProducts.filter(p => p.price >= filters.minPrice);
-    }
-    
-    if (filters.maxPrice) {
-      filteredProducts = filteredProducts.filter(p => p.price <= filters.maxPrice);
-    }
-    
-    return {
-      success: true,
-      data: filteredProducts
-    };
   },
 
   // Get single product
   async getProduct(id) {
-    await delay(500);
-    
-    const product = MOCK_PRODUCTS.find(p => p.id === parseInt(id));
-    
-    if (product) {
-      return {
-        success: true,
-        data: product
-      };
-    } else {
-      throw new Error('Product not found');
+    try {
+      // Ensure we have products loaded
+      if (!cachedProducts) {
+        const response = await fetch(API_BASE_URL);
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        cachedProducts = await response.json();
+      }
+      
+      const product = cachedProducts.find(p => p.id === parseInt(id));
+      
+      if (product) {
+        return {
+          success: true,
+          data: product
+        };
+      } else {
+        throw new Error('Product not found');
+      }
+    } catch (error) {
+      console.error('Error fetching product:', error);
+      throw error;
     }
   },
 
   // Purchase product (mock payment)
   async purchaseProduct(productId, userId) {
-    await delay(2000);
-    
-    const product = MOCK_PRODUCTS.find(p => p.id === parseInt(productId));
-    
-    if (!product) {
-      throw new Error('Product not found');
+    try {
+      // Ensure we have products loaded
+      if (!cachedProducts) {
+        const response = await fetch(API_BASE_URL);
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        cachedProducts = await response.json();
+      }
+      
+      const product = cachedProducts.find(p => p.id === parseInt(productId));
+      
+      if (!product) {
+        throw new Error('Product not found');
+      }
+      
+      // Mock payment success
+      const purchase = {
+        id: MOCK_PURCHASES.length + 1,
+        productId: product.id,
+        userId: userId,
+        product: product,
+        purchaseDate: new Date().toISOString(),
+        amount: product.price,
+        currency: product.currency,
+        status: 'completed'
+      };
+      
+      MOCK_PURCHASES.push(purchase);
+      
+      return {
+        success: true,
+        data: purchase
+      };
+    } catch (error) {
+      console.error('Error purchasing product:', error);
+      throw error;
     }
-    
-    // Mock payment success
-    const purchase = {
-      id: MOCK_PURCHASES.length + 1,
-      productId: product.id,
-      userId: userId,
-      product: product,
-      purchaseDate: new Date().toISOString(),
-      amount: product.price,
-      currency: product.currency,
-      status: 'completed'
-    };
-    
-    MOCK_PURCHASES.push(purchase);
-    
-    return {
-      success: true,
-      data: purchase
-    };
   },
 
   // Get user's purchased products
@@ -125,29 +165,61 @@ export const productService = {
 
   // Get product categories
   async getCategories() {
-    await delay(300);
-    
-    const categories = [...new Set(MOCK_PRODUCTS.map(p => p.category))];
-    
-    return {
-      success: true,
-      data: categories
-    };
+    try {
+      // Ensure we have products loaded
+      if (!cachedProducts) {
+        const response = await fetch(API_BASE_URL);
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        cachedProducts = await response.json();
+      }
+      
+      const categories = [...new Set(cachedProducts.map(p => p.category))];
+      
+      return {
+        success: true,
+        data: categories
+      };
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      return {
+        success: false,
+        error: error.message,
+        data: []
+      };
+    }
   },
 
   // Search products
   async searchProducts(query) {
-    await delay(500);
-    
-    const searchTerm = query.toLowerCase();
-    const results = MOCK_PRODUCTS.filter(p => 
-      p.title.toLowerCase().includes(searchTerm) ||
-      p.description.toLowerCase().includes(searchTerm)
-    );
-    
-    return {
-      success: true,
-      data: results
-    };
+    try {
+      // Ensure we have products loaded
+      if (!cachedProducts) {
+        const response = await fetch(API_BASE_URL);
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        cachedProducts = await response.json();
+      }
+      
+      const searchTerm = query.toLowerCase();
+      const results = cachedProducts.filter(p => 
+        p.title.toLowerCase().includes(searchTerm) ||
+        p.description.toLowerCase().includes(searchTerm)
+      );
+      
+      return {
+        success: true,
+        data: results
+      };
+    } catch (error) {
+      console.error('Error searching products:', error);
+      return {
+        success: false,
+        error: error.message,
+        data: []
+      };
+    }
   }
 };

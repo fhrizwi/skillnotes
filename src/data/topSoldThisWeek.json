@@ -1,0 +1,95 @@
+[
+  {
+    "id": 1,
+    "title": "Complete React.js Mastery Guide",
+    "description": "Comprehensive guide covering React fundamentals, hooks, state management, and advanced patterns.",
+    "price": 299,
+    "originalPrice": 599,
+    "currency": "INR",
+    "category": "Web Development",
+    "fileType": "PDF",
+    "fileSize": "2.5 MB",
+    "downloads": 15420,
+    "rating": 4.8,
+    "reviews": 324,
+    "banner": "/images/heroimage.png",
+    "images": [
+      "/images/heroimage.png",
+      "/images/heroimage.png",
+      "/images/heroimage.png",
+      "/images/heroimage.png"
+    ],
+    "createdAt": "2024-01-15",
+    "rank": 1
+  },
+  {
+    "id": 2,
+    "title": "JavaScript ES6+ Complete Reference",
+    "description": "Master modern JavaScript with ES6+ features, async programming, and best practices.",
+    "price": 199,
+    "originalPrice": 399,
+    "currency": "INR",
+    "category": "Programming",
+    "fileType": "ZIP",
+    "fileSize": "3.2 MB",
+    "downloads": 12850,
+    "rating": 4.7,
+    "reviews": 287,
+    "banner": "/images/heroimage.png",
+    "images": [
+      "/images/heroimage.png",
+      "/images/heroimage.png",
+      "/images/heroimage.png",
+      "/images/heroimage.png"
+    ],
+    "createdAt": "2024-01-20",
+    "rank": 2
+  },
+  {
+    "id": 3,
+    "title": "DSA Complete Course",
+    "description": "Data Structures & Algorithms mastery with comprehensive examples and practice problems.",
+    "price": 399,
+    "originalPrice": 799,
+    "currency": "INR",
+    "category": "Programming",
+    "fileType": "PDF",
+    "fileSize": "4.1 MB",
+    "downloads": 9876,
+    "rating": 4.9,
+    "reviews": 156,
+    "banner": "/images/heroimage.png",
+    "images": [
+      "/images/heroimage.png",
+      "/images/heroimage.png",
+      "/images/heroimage.png",
+      "/images/heroimage.png"
+    ],
+    "createdAt": "2024-01-25",
+    "rank": 3
+  },
+  {
+    "id": 4,
+    "title": "Python for Beginners",
+    "description": "Learn Python programming from scratch with practical examples and projects.",
+    "price": 249,
+    "originalPrice": 499,
+    "currency": "INR",
+    "category": "Programming",
+    "fileType": "ZIP",
+    "fileSize": "2.8 MB",
+    "downloads": 11234,
+    "rating": 4.6,
+    "reviews": 198,
+    "banner": "/images/heroimage.png",
+    "images": [
+      "/images/heroimage.png",
+      "/images/heroimage.png",
+      "/images/heroimage.png",
+      "/images/heroimage.png"
+    ],
+    "createdAt": "2024-02-01",
+    "rank": 4
+  }
+]
+

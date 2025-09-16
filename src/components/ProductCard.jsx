@@ -69,6 +69,15 @@ export default function ProductCard({ product }) {
           </span>
         </div>
         
+        {/* Ranking Badge */}
+        {rank && (
+          <div className="absolute top-3 right-3">
+            <span className="bg-black dark:bg-white text-white dark:text-black px-2 py-1 rounded-full text-xs font-bold shadow-lg">
+              #{rank}
+            </span>
+          </div>
+        )}
+        
       </div>
 
       {/* Content */}
