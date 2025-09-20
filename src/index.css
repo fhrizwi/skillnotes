@@ -1,3 +1,4 @@
+@import "@radix-ui/themes/styles.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -45,4 +46,55 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Swiper pagination styles */
+.swiper-pagination {
+  bottom: 2rem !important;
+}
+
+.swiper-pagination-bullet {
+  width: 12px !important;
+  height: 12px !important;
+  background: rgba(255, 255, 255, 0.3) !important;
+  opacity: 1 !important;
+  margin: 0 6px !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: rgba(255, 255, 255, 1) !important;
+  transform: scale(1.2) !important;
+}
+
+/* Fix autofill colors */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+  -webkit-text-fill-color: #111827 !important;
+  background-color: #ffffff !important;
+  border: 2px solid #e5e7eb !important;
+}
+
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+  -webkit-text-fill-color: #111827 !important;
+  background-color: #ffffff !important;
+  border: 2px solid #111827 !important;
+  outline: none !important;
+}
+
+/* Dark mode autofill */
+.dark input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #1f2937 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background-color: #1f2937 !important;
+  border: 2px solid #4b5563 !important;
+}
+
+.dark input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px #1f2937 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background-color: #1f2937 !important;
+  border: 2px solid #ffffff !important;
+  outline: none !important;
 }

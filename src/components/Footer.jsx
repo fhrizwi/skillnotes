@@ -9,7 +9,7 @@ export default function Footer() {
                 {/* Main Footer Content */}
                 <div className='grid md:grid-cols-4 gap-8 mb-8'>
                     {/* Quick Links */}
-                    <div>
+                    <div className='text-center md:text-left'>
                         <h3 className='text-xl font-bold text-black dark:text-white mb-4'>Quick Links</h3>
                         <div className='space-y-3'>
                             <Link to="/" className='block text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200'>
@@ -25,7 +25,7 @@ export default function Footer() {
                     </div>
 
                     {/* Support Links */}
-                    <div>
+                    <div className='text-center md:text-left'>
                         <h3 className='text-xl font-bold text-black dark:text-white mb-4'>Support</h3>
                         <div className='space-y-3'>
                             <Link to="/faq" className='block text-gray-600 dark:text-light-gray hover:text-black dark:hover:text-white transition-colors duration-200'>
@@ -44,24 +44,24 @@ export default function Footer() {
                     </div>
 
                     {/* Contact Info */}
-                    <div>
+                    <div className='text-center md:text-left'>
                         <h3 className='text-xl font-bold text-black dark:text-white mb-4'>Contact Info</h3>
                         <div className='space-y-4'>
-                            <div className='flex items-start gap-3'>
+                            <div className='flex items-start gap-3 justify-center md:justify-start'>
                                 <Mail className='w-5 h-5 text-gray-600 dark:text-light-gray mt-1 flex-shrink-0' />
                                 <div>
                                     <p className='text-gray-600 dark:text-light-gray'>support@skillnotes.com</p>
                                     <p className='text-gray-600 dark:text-light-gray text-sm'>We'll respond within 24 hours</p>
                                 </div>
                             </div>
-                            <div className='flex items-start gap-3'>
+                            <div className='flex items-start gap-3 justify-center md:justify-start'>
                                 <Phone className='w-5 h-5 text-gray-600 dark:text-light-gray mt-1 flex-shrink-0' />
                                 <div>
                                     <p className='text-gray-600 dark:text-light-gray'>+91 6206957650</p>
                                     <p className='text-gray-600 dark:text-light-gray text-sm'>Mon-Fri 9AM-6PM IST</p>
                                 </div>
                             </div>
-                            <div className='flex items-start gap-3'>
+                            <div className='flex items-start gap-3 justify-center md:justify-start'>
                                 <MapPin className='w-5 h-5 text-gray-600 dark:text-light-gray mt-1 flex-shrink-0' />
                                 <div>
                                     <p className='text-gray-600 dark:text-light-gray'>Hostel-16, MMDU</p>

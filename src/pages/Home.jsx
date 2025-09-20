@@ -157,7 +157,7 @@ export default function Home() {
           {/* Right Side - Image */}
           <div className='w-full lg:w-1/2 flex justify-center lg:justify-end'>
             <img 
-              src="/images/heroimage.png" 
+              src="/images/heroimage.webp" 
               alt="SkillNotes Hero" 
               className='w-full max-w-lg h-auto'
             />
@@ -210,14 +210,14 @@ export default function Home() {
               <div className='flex -space-x-3'>
                 <div className='w-16 h-16 rounded-full border-2 border-white dark:border-black z-10 overflow-hidden'>
                   <img 
-                    src="/images/heroimage.png" 
+                    src="/images/mrsonukr.jpg" 
                     alt="Sonu Kumar" 
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className='w-16 h-16 rounded-full border-2 border-white dark:border-black overflow-hidden'>
                   <img 
-                    src="/images/heroimage.png" 
+                    src="/images/faizul.png" 
                     alt="Faizul Haque" 
                     className="w-full h-full object-cover"
                   />
@@ -246,7 +246,7 @@ export default function Home() {
               <div className='flex items-center gap-4'>
                 <div className='w-16 h-16 rounded-full border-2 border-white dark:border-black overflow-hidden'>
                   <img 
-                    src="/images/heroimage.png" 
+                    src="/images/mrsonukr.jpg" 
                     alt="Sonu Kumar" 
                     className="w-full h-full object-cover"
                   />
@@ -270,7 +270,7 @@ export default function Home() {
               <div className='flex items-center gap-4'>
                 <div className='w-16 h-16 rounded-full border-2 border-white dark:border-black overflow-hidden'>
                   <img 
-                    src="/images/heroimage.png" 
+                    src="/images/faizul.png" 
                     alt="Faizul Haque" 
                     className="w-full h-full object-cover"
                   />
@@ -280,7 +280,7 @@ export default function Home() {
                     Faizul Haque
                   </h3>
                   <p className='text-sm text-gray-600 dark:text-gray-300 mb-2'>
-                    Frontend Developer
+                    Content Creator
                   </p>
                   <p className='text-xs text-gray-500 dark:text-gray-400'>
                     Creates all the notes and study materials for students.

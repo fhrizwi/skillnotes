@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ShoppingCart, Download, Star, Check, Trash2 } from 'lucide-react'
 import { useCart } from '../contexts/CartContext'
+import { useNotification } from '../contexts/NotificationContext'
 import { useNavigate } from 'react-router-dom'
 
 export default function ProductCard({ product }) {
   const { addToCart, removeFromCart, cartItems } = useCart()
-  const [addedToCart, setAddedToCart] = useState(false)
+  const { showSuccess, showError } = useNotification()
   const navigate = useNavigate()
   
   // Check if product is already in cart
@@ -27,15 +28,18 @@ export default function ProductCard({ product }) {
 
   const handleAddToCart = (e) => {
     e.stopPropagation()
+    const wasInCart = isInCart
     addToCart(product)
-    setAddedToCart(true)
-    setTimeout(() => setAddedToCart(false), 2000)
+    
+    if (!wasInCart) {
+      showSuccess('Added to cart')
+    }
   }
 
   const handleRemoveFromCart = (e) => {
     e.stopPropagation()
     removeFromCart(product.id)
-    setAddedToCart(false)
+    showSuccess('Removed from cart')
   }
 
   const handleBuyNow = (e) => {
@@ -134,25 +138,11 @@ export default function ProductCard({ product }) {
            ) : (
              <button 
                onClick={handleAddToCart}
-               className={`flex-1 px-2 py-1.5 rounded text-xs font-medium transition-colors duration-200 flex items-center justify-center gap-1 ${
-                 addedToCart 
-                   ? 'bg-green-600 text-white' 
-                   : 'bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200'
-               }`}
+               className="flex-1 px-2 py-1.5 rounded text-xs font-medium transition-colors duration-200 flex items-center justify-center gap-1 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
              >
-               {addedToCart ? (
-                 <>
-                   <Check className="w-3 h-3" />
-                   <span className="hidden sm:inline">Added!</span>
-                   <span className="sm:hidden">Added!</span>
-                 </>
-               ) : (
-                 <>
-                   <ShoppingCart className="w-3 h-3" />
-                   <span className="hidden sm:inline">Add to Cart</span>
-                   <span className="sm:hidden">Add</span>
-                 </>
-               )}
+               <ShoppingCart className="w-3 h-3" />
+               <span className="hidden sm:inline">Add to Cart</span>
+               <span className="sm:hidden">Add</span>
              </button>
            )}
            <button 

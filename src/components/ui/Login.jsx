@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { LogIn, Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react'
+import { LogIn, Mail, Lock, Eye, EyeOff, Loader2, BookOpen } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { authService } from '../../services/authService'
+import AuthSlider from '../AuthSlider'
+import ThemeToggle from '../ThemeToggle'
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -11,7 +13,8 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [rememberMe, setRememberMe] = useState(true);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -28,6 +31,29 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setFieldErrors({});
+
+    // Validate all fields and collect errors
+    const errors = {};
+    
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!formData.email.includes('@')) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    if (!formData.password.trim()) {
+      errors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      errors.password = 'Password must be at least 6 characters';
+    }
+
+    // If there are validation errors, show them and stop
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await authService.login(formData.email, formData.password);
@@ -40,132 +66,154 @@ export default function Login() {
       }
     } catch (err) {
       setError(err.message);
+      console.error('Login error:', err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className='min-h-screen bg-white dark:bg-black flex items-center justify-center p-4'>
-      <div className='bg-gray-50 dark:bg-dark-gray rounded-lg p-8 w-full max-w-md border border-gray-200 dark:border-gray-700'>
-        <div className='text-center mb-8'>
-          <div className='w-16 h-16 bg-black dark:bg-white rounded-lg flex items-center justify-center mx-auto mb-4'>
-            <LogIn className='w-8 h-8 text-white dark:text-black' />
+    <div className="h-screen bg-gray-100 dark:bg-gray-900 flex overflow-hidden">
+      {/* Left section - Auth Slider */}
+      <AuthSlider />
+
+      {/* Right section - form with scrollbar */}
+      <div className="w-full md:w-2/5 h-screen overflow-y-auto bg-white dark:bg-black">
+        {/* Mobile Header */}
+        <div className="md:hidden flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-black dark:bg-white rounded-lg flex items-center justify-center">
+              <BookOpen className="w-4 h-4 text-white dark:text-black" />
+            </div>
+            <span className="text-black dark:text-white font-bold text-lg">SkillNotes</span>
           </div>
-          <h1 className='text-2xl font-bold text-black dark:text-white mb-2'>Welcome Back</h1>
-          <p className='text-gray-600 dark:text-light-gray'>Sign in to your SkillNotes account</p>
+          <ThemeToggle />
         </div>
 
-        {/* Demo Credentials Info */}
-        <div className='mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg'>
-          <h3 className='text-sm font-semibold text-blue-800 dark:text-blue-200 mb-2'>Demo Credentials:</h3>
-          <p className='text-sm text-blue-700 dark:text-blue-300 mb-3'>
-            <strong>Email:</strong> mrsonukr@gmail.com<br/>
-            <strong>Password:</strong> 123456
-          </p>
-          <button
-            type="button"
-            onClick={() => {
-              setFormData({
-                email: 'mrsonukr@gmail.com',
-                password: '123456'
-              });
-            }}
-            className='text-xs bg-blue-600 dark:bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors'
-            disabled={loading}
-          >
-            Fill Demo Credentials
-          </button>
-        </div>
-
-        {/* Error Message */}
-        {error && (
-          <div className='mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg'>
-            <p className='text-sm text-red-700 dark:text-red-300'>{error}</p>
-          </div>
-        )}
-
-        <form className='space-y-6' onSubmit={handleSubmit}>
-          <div>
-            <label className='block text-sm font-medium text-black dark:text-white mb-2'>Email</label>
-            <div className='relative'>
-              <Mail className='w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-light-gray' />
-              <input 
-                type="email" 
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className='w-full bg-white dark:bg-black border border-gray-300 dark:border-light-gray rounded-lg pl-10 pr-4 py-3 text-black dark:text-white placeholder-gray-500 dark:placeholder-light-gray focus:outline-none focus:border-black dark:focus:border-white'
-                placeholder='Enter your email'
-                required
-                disabled={loading}
-              />
+        <div className="flex items-start md:items-center justify-center p-6 min-h-full">
+          <div className="w-full max-w-md">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back</h1>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
+                Sign in to your SkillNotes account
+              </p>
             </div>
-          </div>
 
-          <div>
-            <label className='block text-sm font-medium text-black dark:text-white mb-2'>Password</label>
-            <div className='relative'>
-              <Lock className='w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-light-gray' />
-              <input 
-                type={showPassword ? "text" : "password"}
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className='w-full bg-white dark:bg-black border border-gray-300 dark:border-light-gray rounded-lg pl-10 pr-12 py-3 text-black dark:text-white placeholder-gray-500 dark:placeholder-light-gray focus:outline-none focus:border-black dark:focus:border-white'
-                placeholder='Enter your password'
-                required
-                disabled={loading}
-              />
-              <button 
-                type="button" 
-                onClick={() => setShowPassword(!showPassword)}
-                className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-light-gray hover:text-black dark:hover:text-white'
-                disabled={loading}
-              >
-                {showPassword ? <EyeOff className='w-5 h-5' /> : <Eye className='w-5 h-5' />}
-              </button>
-            </div>
-          </div>
 
-          <div className='flex items-center justify-between'>
-            <label className='flex items-center'>
-              <input 
-                type="checkbox" 
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className='rounded border-gray-300 dark:border-light-gray bg-white dark:bg-black text-black dark:text-white focus:ring-0' 
-                disabled={loading}
-              />
-              <span className='ml-2 text-sm text-gray-600 dark:text-light-gray'>Remember me</span>
-            </label>
-            <a href="#" className='text-sm text-black dark:text-white hover:text-gray-600 dark:hover:text-light-gray'>Forgot password?</a>
-          </div>
-
-          <button 
-            type="submit" 
-            disabled={loading}
-            className='w-full bg-black dark:bg-white text-white dark:text-black py-3 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed'
-          >
-            {loading ? (
-              <>
-                <Loader2 className='w-5 h-5 animate-spin' />
-                Signing In...
-              </>
-            ) : (
-              <>
-                <LogIn className='w-5 h-5' />
-                Sign In
-              </>
+            {/* Error Message */}
+            {error && (
+              <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-lg">
+                <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
+              </div>
             )}
-          </button>
-        </form>
 
-        <div className='mt-6 text-center'>
-          <p className='text-gray-600 dark:text-light-gray'>
-            Don't have an account? 
-            <Link to="/signup" className='text-black dark:text-white hover:text-gray-600 dark:hover:text-light-gray ml-1 font-medium'>Sign up</Link>
-          </p>
+            {/* Form */}
+            <form className="space-y-5" onSubmit={handleSubmit} noValidate>
+              {/* Email */}
+              <div>
+                <div className="relative">
+                  <label htmlFor="email" className="sr-only">Email Address</label>
+                  <Mail className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="w-full bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-lg pl-10 pr-4 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-gray-900 dark:focus:border-white transition-colors duration-200 disabled:opacity-50"
+                    placeholder="Email Address"
+                    required
+                    disabled={loading}
+                  />
+                </div>
+                {fieldErrors.email && (
+                  <p className="text-red-500 text-sm mt-1">{fieldErrors.email}</p>
+                )}
+              </div>
+
+              {/* Password */}
+              <div>
+                <div className="relative">
+                  <label htmlFor="password" className="sr-only">Password</label>
+                  <Lock className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+                  <input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    className="w-full bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-lg pl-10 pr-12 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-gray-900 dark:focus:border-white transition-colors duration-200 disabled:opacity-50"
+                    placeholder="Password"
+                    required
+                    disabled={loading}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white"
+                    disabled={loading}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                </div>
+                {fieldErrors.password && (
+                  <p className="text-red-500 text-sm mt-1">{fieldErrors.password}</p>
+                )}
+              </div>
+
+              {/* Remember Me & Forgot Password */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <input
+                    id="remember"
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="rounded border-2 border-gray-200 dark:border-gray-600 bg-white dark:bg-black text-black dark:text-white focus:ring-0 disabled:opacity-50 accent-black dark:accent-white"
+                    disabled={loading}
+                  />
+                  <label htmlFor="remember" className="text-sm text-gray-600 dark:text-gray-300">
+                    Remember me
+                  </label>
+                </div>
+                <a href="#" className="text-sm text-gray-900 dark:text-white hover:underline">
+                  Forgot password?
+                </a>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-100 transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-busy={loading}
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Signing In...
+                  </>
+                ) : (
+                  <>
+                    <LogIn className="w-5 h-5" />
+                    Sign In
+                  </>
+                )}
+              </button>
+            </form>
+
+            {/* Footer */}
+            <div className="mt-6 text-center">
+              <p className="text-gray-600 dark:text-gray-300 text-sm">
+                Don't have an account?{' '}
+                <Link to="/signup" className="text-gray-900 dark:text-white font-medium hover:underline">
+                  Sign up
+                </Link>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

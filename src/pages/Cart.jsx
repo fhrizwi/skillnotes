@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { useNotification } from '../contexts/NotificationContext';
 import { Trash2, ShoppingBag, ArrowLeft, CreditCard, Tag, Check, X } from 'lucide-react';
 
 export default function Cart() {
   const { cartItems, removeFromCart, getTotalPrice, completePurchase } = useCart();
+  const { showSuccess, showError } = useNotification();
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [couponError, setCouponError] = useState('');
@@ -20,6 +22,7 @@ export default function Cart() {
 
   const handleRemoveItem = (productId) => {
     removeFromCart(productId);
+    showSuccess('Removed from cart');
   };
 
   const handleApplyCoupon = () => {
@@ -69,8 +72,12 @@ export default function Cart() {
   };
 
   const handleCheckout = () => {
-    completePurchase();
-    alert('Purchase completed! Your items are now available in My Purchases.');
+    const result = completePurchase();
+    if (result.success) {
+      showSuccess('Purchase completed!');
+    } else {
+      showError('Purchase failed');
+    }
   };
 
 

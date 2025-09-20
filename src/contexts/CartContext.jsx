@@ -40,7 +40,6 @@ export const CartProvider = ({ children }) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
   };
 
-
   const clearCart = () => {
     setCartItems([]);
   };
@@ -54,14 +53,19 @@ export const CartProvider = ({ children }) => {
   };
 
   const completePurchase = () => {
-    // Save current cart items to purchases
-    const savedPurchases = localStorage.getItem('skillnotes-purchases');
-    const existingPurchases = savedPurchases ? JSON.parse(savedPurchases) : [];
-    const newPurchases = [...existingPurchases, ...cartItems];
-    localStorage.setItem('skillnotes-purchases', JSON.stringify(newPurchases));
-    
-    // Clear the cart after successful purchase
-    clearCart();
+    try {
+      // Save current cart items to purchases
+      const savedPurchases = localStorage.getItem('skillnotes-purchases');
+      const existingPurchases = savedPurchases ? JSON.parse(savedPurchases) : [];
+      const newPurchases = [...existingPurchases, ...cartItems];
+      localStorage.setItem('skillnotes-purchases', JSON.stringify(newPurchases));
+      
+      // Clear the cart after successful purchase
+      setCartItems([]);
+      return { success: true, itemCount: cartItems.length };
+    } catch (error) {
+      return { success: false, error: 'Failed to complete purchase. Please try again.' };
+    }
   };
 
   const value = {

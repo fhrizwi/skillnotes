@@ -35,7 +35,7 @@ export default function Store() {
     {
       id: 1,
       title: "Complete React.js Mastery Guide",
-      banner: "/images/heroimage.png",
+      banner: "/images/heroimage.webp",
       price: 299,
       originalPrice: 599,
       downloads: 15420,
@@ -48,7 +48,7 @@ export default function Store() {
     {
       id: 2,
       title: "JavaScript ES6+ Complete Reference",
-      banner: "/images/heroimage.png",
+      banner: "/images/heroimage.webp",
       price: 199,
       originalPrice: 399,
       downloads: 12850,
@@ -61,7 +61,7 @@ export default function Store() {
     {
       id: 3,
       title: "Node.js Backend Development",
-      banner: "/images/heroimage.png",
+      banner: "/images/heroimage.webp",
       price: 399,
       originalPrice: 799,
       downloads: 9876,
@@ -74,7 +74,7 @@ export default function Store() {
     {
       id: 4,
       title: "Python Data Science Handbook",
-      banner: "/images/heroimage.png",
+      banner: "/images/heroimage.webp",
       price: 349,
       originalPrice: 699,
       downloads: 11234,
@@ -87,7 +87,7 @@ export default function Store() {
     {
       id: 5,
       title: "UI/UX Design Principles",
-      banner: "/images/heroimage.png",
+      banner: "/images/heroimage.webp",
       price: 249,
       originalPrice: 499,
       downloads: 8765,
@@ -100,7 +100,7 @@ export default function Store() {
     {
       id: 6,
       title: "AWS Cloud Architecture",
-      banner: "/images/heroimage.png",
+      banner: "/images/heroimage.webp",
       price: 449,
       originalPrice: 899,
       downloads: 6543,
